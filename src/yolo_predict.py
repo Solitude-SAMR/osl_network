@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import rospy 
+import rospy
 import numpy as np
 import cv2
 
@@ -58,10 +58,11 @@ class Prediction():
         self.img = np.zeros((1,1,3))
         
         # TODO: Make a Yolo class for these variables. 
-        path_cfg = "/home/bvibhav/Documents/Solitude/wavetank/yolov3.cfg"
-        path_weights = "/home/bvibhav/Documents/Solitude/wavetank/yolov3_final.weights"
-        path_classes = "/home/bvibhav/Documents/Solitude/wavetank/data/classes.txt"
-        self.net = cv2.dnn.readNet(path_weights, path_cfg)
+        path_network = rospy.get_param("yolo_network")
+        path_weights = rospy.get_param("yolo_weights")
+        path_classes = rospy.get_param("yolo_classes")
+
+        self.net = cv2.dnn.readNet(path_weights, path_network)
         self.classes = []
         with open(path_classes, "r") as f:
             self.classes = [line.strip() for line in f.readlines()]
@@ -70,7 +71,7 @@ class Prediction():
         self.colors = np.random.uniform(0, 255, size=(len(self.classes), 3))
 
         rospy.loginfo("Loaded Yolo Predictor.")
-
+        
         # Labelled image publisher
         self.pub_img = rospy.Publisher("/bluerov2/bbox_pred", Image, queue_size=10)
 
