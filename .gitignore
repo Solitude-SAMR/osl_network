@@ -1,6 +1,6 @@
 # Custom files to avoid
-data/*
-models/*
+data/images/*
+models/*.weights
 
 # Standard ROS files
 devel/
