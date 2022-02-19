@@ -1,6 +1,0 @@
-rust_pipe
-ball
-gas_cannister
-gas_tank
-oil_drum
-cage
